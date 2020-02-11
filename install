@@ -1,0 +1,14 @@
+#/bin/bash
+
+# Install yay to install applications from the Arch User Repository (yay)
+sudo pacman -Sy yay --needed --noconfirm
+
+# Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# ----- Applications ----- #
+# Google Chrome
+yay -Sy google-chrome --needed --noconfirm
+
+# Slack
+yay -Sy slack-desktop --needed --noconfirm
