@@ -1,5 +1,8 @@
 #/bin/bash
 
+DOTFILES_DIR="${HOME}/repo/randy/dotfiles"
+HOME_CONFIG_DIR="${HOME}/.config"
+
 # Install yay to install applications from the Arch User Repository (yay)
 sudo pacman -Sy yay --needed --noconfirm
 
@@ -24,15 +27,40 @@ install_wine() {
     yay_install 'wine-staging'
 }
 
-# ----- Applications ----- #
+install_dotfiles() {
+    echo '>>>>>> Cloning repo `dotfiles`...'
+
+    if [ ! -d $DOTFILES_DIR ]
+    then
+        mkdir -p -- ~/repo
+        git clone https://github.com/randy-concepcion/dotfiles.git ${DOTFILES_DIR}
+        echo ">>>>> Repo 'dotfiles' cloned to ${DOTFILES_DIR}..."
+    else
+        echo ">>>>> Repo 'dotfiles' already cloned to ${DOTFILES_DIR}"
+    fi
+}
+
+install_terminator() {
+    yay_install 'terminator'
+
+    echo ">>>>> Linking terminator config: ${HOME_CONFIG_DIR}/terminator/config ..."
+    ln -sf "${DOTFILES_DIR}/terminatorconfig" "${HOME_CONFIG_DIR}/terminator/config"
+
+    echo ">>>>> Copying gtk3.0 css config (for ugly terminator tabs): ${HOME_CONFIG_DIR}/gtk-3.0/gtk.css ..."
+    cp "${DOTFILES_DIR}/gtk.css" "${HOME_CONFIG_DIR}/gtk-3.0/gtk.css"
+}
+
+# ----- Basic Applications ----- #
 yay_install 'audacity'
 yay_install 'code'
 yay_install 'flameshot'
 yay_install 'gimp'
+yay_install 'git'
 yay_install 'google-chrome'
 yay_install 'slack-desktop'
 yay_install 'spotify'
 yay_install 'telegram-desktop'
+yay_install 'transmission-qt'
 yay_install 'trello'
 yay_install 'viber'
 yay_install 'zoom'
@@ -42,3 +70,7 @@ install_gvim
 yay_install 'the_silver_searcher'
 yay_install 'unzip'
 yay_install 'xclip'
+
+# ----- Applications with Custom Configs ----- #
+install_dotfiles
+install_terminator
