@@ -7,8 +7,34 @@ sudo pacman -Sy yay --needed --noconfirm
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # ----- Applications ----- #
-# Google Chrome
+# flameshot (screenshot tool)
+yay -Sy flameshot --needed --noconfirm
+
+# google chrome
 yay -Sy google-chrome --needed --noconfirm
 
-# Slack
+# slack
 yay -Sy slack-desktop --needed --noconfirm
+
+# vscode
+yay -Sy code --needed --noconfirm
+
+# zoom
+yay -Sy zoom --needed --noconfirm
+
+# ----- Tools ----- #
+# git
+yay -Sy git --needed --noconfirm
+
+# gvim
+yay -R vim --noconfirm
+yay -Sy gvim --needed --noconfirm
+
+# the silver searcher
+yay -Sy the_silver_searcher
+
+# unzip
+yay -Sy unzip --needed --noconfirm
+
+# xclip
+yay -Sy xclip --needed --noconfirm
