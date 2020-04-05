@@ -24,15 +24,31 @@ install_wine() {
     yay_install 'wine-staging'
 }
 
-# ----- Applications ----- #
+install_dotfiles() {
+    DOTFILES_DIR="${HOME}/repo/randy/dotfiles"
+    echo '>>>>>> Cloning repo `dotfiles`...'
+
+    if [ ! -d $DOTFILES_DIR ]
+    then
+        mkdir -p -- ~/repo
+        git clone https://github.com/randy-concepcion/dotfiles.git ${DOTFILES_DIR}
+        echo ">>>>> Repo 'dotfiles' cloned to ${DOTFILES_DIR}..."
+    else
+        echo ">>>>> Repo 'dotfiles' already cloned to ${DOTFILES_DIR}"
+    fi
+}
+
+# ----- Basic Applications ----- #
 yay_install 'audacity'
 yay_install 'code'
 yay_install 'flameshot'
 yay_install 'gimp'
+yay_install 'git'
 yay_install 'google-chrome'
 yay_install 'slack-desktop'
 yay_install 'spotify'
 yay_install 'telegram-desktop'
+yay_install 'transmission-qt'
 yay_install 'trello'
 yay_install 'viber'
 yay_install 'zoom'
@@ -42,3 +58,6 @@ install_gvim
 yay_install 'the_silver_searcher'
 yay_install 'unzip'
 yay_install 'xclip'
+
+# ----- Applications with Custom Configs ----- #
+install_dotfiles
