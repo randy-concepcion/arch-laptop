@@ -6,35 +6,20 @@ sudo pacman -Sy yay --needed --noconfirm
 # Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+yay_install() {
+    yay -Sy $1 --needed --noconfirm
+}
+
 # ----- Applications ----- #
-# flameshot (screenshot tool)
-yay -Sy flameshot --needed --noconfirm
-
-# google chrome
-yay -Sy google-chrome --needed --noconfirm
-
-# slack
-yay -Sy slack-desktop --needed --noconfirm
-
-# vscode
-yay -Sy code --needed --noconfirm
-
-# zoom
-yay -Sy zoom --needed --noconfirm
+yay_install 'flameshot'
+yay_install 'google-chrome'
+yay_install 'slack-desktop'
+yay_install 'code'
+yay_install 'zoom'
 
 # ----- Tools ----- #
-# git
-yay -Sy git --needed --noconfirm
-
-# gvim
 yay -R vim --noconfirm
-yay -Sy gvim --needed --noconfirm
-
-# the silver searcher
-yay -Sy the_silver_searcher
-
-# unzip
-yay -Sy unzip --needed --noconfirm
-
-# xclip
-yay -Sy xclip --needed --noconfirm
+yay_install 'gvim'
+yay_install 'the_silver_searcher'
+yay_install 'unzip'
+yay_install 'xclip'
