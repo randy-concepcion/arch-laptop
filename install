@@ -6,20 +6,39 @@ sudo pacman -Sy yay --needed --noconfirm
 # Keep-alive: update existing sudo time stamp if set, otherwise do nothing.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+yay_uninstall() {
+    yay -R $1 --noconfirm
+}
+
 yay_install() {
     yay -Sy $1 --needed --noconfirm
 }
 
+install_gvim() {
+    yay_uninstall 'vim'
+    yay_install 'gvim'
+}
+
+install_wine() {
+    yay_uninstall 'wine'
+    yay_install 'wine-staging'
+}
+
 # ----- Applications ----- #
+yay_install 'audacity'
+yay_install 'code'
 yay_install 'flameshot'
+yay_install 'gimp'
 yay_install 'google-chrome'
 yay_install 'slack-desktop'
-yay_install 'code'
+yay_install 'spotify'
+yay_install 'telegram-desktop'
+yay_install 'trello'
+yay_install 'viber'
 yay_install 'zoom'
 
 # ----- Tools ----- #
-yay -R vim --noconfirm
-yay_install 'gvim'
+install_gvim
 yay_install 'the_silver_searcher'
 yay_install 'unzip'
 yay_install 'xclip'
