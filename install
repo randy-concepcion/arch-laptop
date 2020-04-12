@@ -3,7 +3,8 @@
 DOTFILES_DIR="${HOME}/repo/randy/dotfiles"
 HOME_CONFIG_DIR="${HOME}/.config"
 OH_MY_ZSH_CUSTOM_PLUGINS_DIR="${HOME}/.oh-my-zsh/custom/plugins"
-OH_MY_ZSH_THEMESl_DIR="${HOME}/.oh-my-zsh/themes"
+OH_MY_ZSH_THEMES_DIR="${HOME}/.oh-my-zsh/themes"
+ZSHRC_CONFIG="${HOME}/.zshrc"
 
 # Install yay to install applications from the Arch User Repository (yay)
 sudo pacman -Sy yay --needed --noconfirm
@@ -52,6 +53,28 @@ install_terminator() {
     cp "${DOTFILES_DIR}/gtk.css" "${HOME_CONFIG_DIR}/gtk-3.0/gtk.css"
 }
 
+zsh_enable_plugin() {
+    # If there is no plugins statement, create it
+    # Otherwise, we'll just append the plugin to list
+    if ! grep -q "^plugins=(" ${ZSHRC_CONFIG}
+    then
+        echo "" >> ${ZSHRC_CONFIG}
+        echo "# Enabled zsh plugins" >> ${ZSHRC_CONFIG}
+        echo "plugins=()" >> ${ZSHRC_CONFIG}
+
+    else
+        echo ">>>>> zsh plugins found in ${ZSHRC_CONFIG}"
+    fi
+
+    if ! grep -q "^plugins=(.*$1.*)$" ${ZSHRC_CONFIG}
+    then
+        sed -i "s/^plugins=(/&$1 /" ${ZSHRC_CONFIG}
+
+    else
+        echo "Plugin already found in ${ZSHRC_CONFIG}: $1"
+    fi
+}
+
 install_customized_zsh() {
     yay_install 'zsh'
 
@@ -84,11 +107,10 @@ install_customized_zsh() {
         echo '>>>>> Plugin zsh-autosuggestions already exists'
     fi
 
-    # TODO: Enable zsh plugins in ~/.zshrc
+    # Enable zsh plugins in ~/.zshrc
+    zsh_enable_plugin 'zsh-syntax-highlighting'
+    zsh_enable_plugin 'zsh-autosuggestions'
 }
-
-install_customized_zsh
-exit 0
 
 # ----- Basic Applications ----- #
 yay_install 'audacity'
@@ -114,3 +136,4 @@ yay_install 'xclip'
 # ----- Applications with Custom Configs ----- #
 install_dotfiles
 install_terminator
+install_customized_zsh
