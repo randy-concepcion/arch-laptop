@@ -112,6 +112,20 @@ install_customized_zsh() {
     zsh_enable_plugin 'zsh-autosuggestions'
 }
 
+install_nerd_font() {
+    echo
+    echo ">>>>> Cloning nerd-fonts repo (this may take a while) ..."
+    git clone https://github.com/ryanoasis/nerd-fonts.git ./temp/ --depth 1
+
+    echo ">>>>> Installing nerd-fonts ..."
+    cd ./temp/
+    ./install.sh DroidSansMono
+
+    echo ">>>>> Cleaning up nerd-fonts repo ..."
+    cd ../
+    rm -rf ./temp/
+}
+
 # ----- Basic Applications ----- #
 yay_install 'audacity'
 yay_install 'code'
@@ -137,3 +151,4 @@ yay_install 'xclip'
 install_dotfiles
 install_terminator
 install_customized_zsh
+install_nerd_font
