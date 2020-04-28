@@ -81,7 +81,7 @@ install_customized_zsh() {
     if [ ! -d "${HOME}/.oh-my-zsh" ]
     then
         echo ">>>>> Installing oh-my-zsh ..."
-        sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+        yes | sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
     else
         echo
         echo 'You already have Oh My Zsh installed.'
