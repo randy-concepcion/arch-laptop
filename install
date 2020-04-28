@@ -126,6 +126,12 @@ install_nerd_font() {
     rm -rf ./temp/
 }
 
+install_python_environment() {
+    yay -S base-devel openssl zlib
+}
+
+install_python_environment
+
 # ----- Basic Applications ----- #
 yay_install 'audacity'
 yay_install 'code'
