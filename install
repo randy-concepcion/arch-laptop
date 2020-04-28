@@ -127,9 +127,13 @@ install_nerd_font() {
 }
 
 install_python_environment() {
+    # Install prerequisite
     yay_install base-devel
     yay_install openssl
     yay_install zlib
+
+    # Install pyenv
+    curl https://pyenv.run | bash
 }
 
 install_python_environment
