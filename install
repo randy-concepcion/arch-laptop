@@ -127,10 +127,25 @@ install_nerd_font() {
 }
 
 install_python_environment() {
-    yay -S base-devel openssl zlib
+    # Install prerequisite
+    yay_install base-devel
+    yay_install openssl
+    yay_install zlib
+
+    # Make sure ~/.pyenv does not exist and remove if it does
+    if [ -d "${HOME}/.pyenv" ]
+    then
+        echo
+	echo ">>>>> ${HOME}/.pyenv found. Removing ..."
+	rm -rf "${HOME}/.pyenv"
+    fi
+
+    # Install pyenv
+    curl https://pyenv.run | bash
 }
 
 install_python_environment
+exit
 
 # ----- Basic Applications ----- #
 yay_install 'audacity'
