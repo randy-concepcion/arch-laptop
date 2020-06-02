@@ -144,13 +144,22 @@ install_python_environment() {
     curl https://pyenv.run | bash
 
     # Add pyenv to path
+    export PATH="${HOME}/.pyenv/bin:${PATH}"
     echo "export PATH=\"\${HOME}/.pyenv/bin:\${PATH}\"" >> ${ZSHRC_CONFIG}
     echo "eval \"\$(pyenv init -)\"" >> ${ZSHRC_CONFIG}
     echo "eval \"\$(pyenv virtualenv-init -)\"" >> ${ZSHRC_CONFIG}
-}
 
-install_python_environment
-exit
+    pyenv update
+
+    # Clone pyenv-virtualenv
+    if [ ! -d "${HOME}/.pyenv/plugins/pyenv-virtualenv" ]
+    then
+        git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME}/.pyenv/plugins/pyenv-virtualenv
+    fi
+
+    # pyenv install version 3.7.4
+    pyenv install 3.7.4
+}
 
 # ----- Basic Applications ----- #
 yay_install 'audacity'
@@ -178,3 +187,4 @@ install_dotfiles
 install_terminator
 install_customized_zsh
 install_nerd_font
+install_python_environment
