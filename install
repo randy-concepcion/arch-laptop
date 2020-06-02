@@ -142,6 +142,11 @@ install_python_environment() {
 
     # Install pyenv
     curl https://pyenv.run | bash
+
+    # Add pyenv to path
+    echo "export PATH=\"\${HOME}/.pyenv/bin:\${PATH}\"" >> ${ZSHRC_CONFIG}
+    echo "eval \"\$(pyenv init -)\"" >> ${ZSHRC_CONFIG}
+    echo "eval \"\$(pyenv virtualenv-init -)\"" >> ${ZSHRC_CONFIG}
 }
 
 install_python_environment
