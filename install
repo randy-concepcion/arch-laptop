@@ -169,10 +169,21 @@ install_n() {
     # Uninstall yarn and nodejs if they exist
     yay_uninstall yarn
     yay_uninstall nodejs
-}
 
-install_n
-exit
+    # If the ~/n folder exists, uninstall n
+    if [ -d "${HOME}/n" ]
+    then
+        n-uninstall -y
+    fi
+
+    # Install n (with nodejs)
+    curl -L https://git.io/n-install | bash -s -- -y
+
+    # Add n to path
+    echo "export N_PREFIX=\"\${HOME}/n\"; [[ :\${PATH}: == *\":\${N_PREFIX}/bin:\"* ]] || PATH+=\"\${N_PREFIX}/bin\"" >> ${ZSHRC_CONFIG} 
+
+    source ~/.bashrc
+}
 
 # ----- Basic Applications ----- #
 yay_install 'audacity'
@@ -201,3 +212,4 @@ install_terminator
 install_customized_zsh
 install_nerd_font
 install_python_environment
+install_n
