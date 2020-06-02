@@ -13,7 +13,11 @@ sudo pacman -Sy yay --needed --noconfirm
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 yay_uninstall() {
-    yay -R $1 --noconfirm
+    # If the package exists, uninstall it
+    if yay -Qs $1 > /dev/null
+    then
+        yay -R $1 --noconfirm
+    fi
 }
 
 yay_install() {
@@ -161,6 +165,26 @@ install_python_environment() {
     pyenv install 3.7.4
 }
 
+install_n() {
+    # Uninstall yarn and nodejs if they exist
+    yay_uninstall yarn
+    yay_uninstall nodejs
+
+    # If the ~/n folder exists, uninstall n
+    if [ -d "${HOME}/n" ]
+    then
+        n-uninstall -y
+    fi
+
+    # Install n (with nodejs)
+    curl -L https://git.io/n-install | bash -s -- -y
+
+    # Add n to path
+    echo "export N_PREFIX=\"\${HOME}/n\"; [[ :\${PATH}: == *\":\${N_PREFIX}/bin:\"* ]] || PATH+=\"\${N_PREFIX}/bin\"" >> ${ZSHRC_CONFIG} 
+
+    source ~/.bashrc
+}
+
 # ----- Basic Applications ----- #
 yay_install 'audacity'
 yay_install 'code'
@@ -188,3 +212,4 @@ install_terminator
 install_customized_zsh
 install_nerd_font
 install_python_environment
+install_n
