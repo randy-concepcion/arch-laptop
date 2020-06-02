@@ -13,7 +13,11 @@ sudo pacman -Sy yay --needed --noconfirm
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 yay_uninstall() {
-    yay -R $1 --noconfirm
+    # If the package exists, uninstall it
+    if yay -Qs $1 > /dev/null
+    then
+        yay -R $1 --noconfirm
+    fi
 }
 
 yay_install() {
@@ -160,6 +164,15 @@ install_python_environment() {
     # pyenv install version 3.7.4
     pyenv install 3.7.4
 }
+
+install_n() {
+    # Uninstall yarn and nodejs if they exist
+    yay_uninstall yarn
+    yay_uninstall nodejs
+}
+
+install_n
+exit
 
 # ----- Basic Applications ----- #
 yay_install 'audacity'
