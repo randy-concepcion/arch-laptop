@@ -188,6 +188,21 @@ install_n() {
 install_rbenv() {
     # Install rbenv
     curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+
+    # Add rbenv to path
+    export PATH="${HOME}/.rbenv/bin:${PATH}"
+    export PATH="${HOME}/.rbenv/shims:${PATH}"
+    echo $PATH
+    echo >> ${ZSHRC_CONFIG}
+    echo "export PATH=\"\${HOME}/.rbenv/bin:\${PATH}\"" >> ${ZSHRC_CONFIG}
+    echo "export PATH=\"\${HOME}/.rbenv/shims:\${PATH}\"" >> ${ZSHRC_CONFIG}
+    echo "eval \"\$(rbenv init -)\"" >> ${ZSHRC_CONFIG}
+
+    # Run rbenv-doctor
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+
+    # Run rbenv init -
+    rbenv init -
 }
 
 install_rbenv
