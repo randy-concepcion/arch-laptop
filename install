@@ -185,6 +185,14 @@ install_n() {
     source ~/.bashrc
 }
 
+install_rbenv() {
+    # Install rbenv
+    curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+}
+
+install_rbenv
+exit
+
 # ----- Basic Applications ----- #
 yay_install 'audacity'
 yay_install 'code'
@@ -213,3 +221,6 @@ install_customized_zsh
 install_nerd_font
 install_python_environment
 install_n
+
+# ----- Work ----- #
+install_rbenv
