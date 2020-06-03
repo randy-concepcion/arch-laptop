@@ -132,9 +132,9 @@ install_nerd_font() {
 
 install_python_environment() {
     # Install prerequisite
-    yay_install base-devel
-    yay_install openssl
-    yay_install zlib
+    yay_install 'base-devel'
+    yay_install 'openssl'
+    yay_install 'zlib'
 
     # Make sure ~/.pyenv does not exist and remove if it does
     if [ -d "${HOME}/.pyenv" ]
@@ -167,8 +167,8 @@ install_python_environment() {
 
 install_n() {
     # Uninstall yarn and nodejs if they exist
-    yay_uninstall yarn
-    yay_uninstall nodejs
+    yay_uninstall 'yarn'
+    yay_uninstall 'nodejs'
 
     # If the ~/n folder exists, uninstall n
     if [ -d "${HOME}/n" ]
@@ -186,23 +186,33 @@ install_n() {
 }
 
 install_rbenv() {
+    # Install prerequisite
+    yay_install 'base-devel'
+    yay_install 'libffi'
+    yay_install 'libffi'
+    yay_install 'libyaml'
+    yay_install 'openssl'
+    yay_install 'zlib'
+
     # Install rbenv
     curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
 
     # Add rbenv to path
     export PATH="${HOME}/.rbenv/bin:${PATH}"
     export PATH="${HOME}/.rbenv/shims:${PATH}"
-    echo $PATH
     echo >> ${ZSHRC_CONFIG}
     echo "export PATH=\"\${HOME}/.rbenv/bin:\${PATH}\"" >> ${ZSHRC_CONFIG}
     echo "export PATH=\"\${HOME}/.rbenv/shims:\${PATH}\"" >> ${ZSHRC_CONFIG}
-    echo "eval \"\$(rbenv init -)\"" >> ${ZSHRC_CONFIG}
+    echo "eval \"\$(rbenv init - zsh --no-rehash)\"" >> ${ZSHRC_CONFIG}
 
     # Run rbenv-doctor
     curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
 
     # Run rbenv init -
     rbenv init -
+
+    # Install ruby version 2.4.5
+    # rbenv install -s '2.4.5'
 }
 
 install_rbenv
